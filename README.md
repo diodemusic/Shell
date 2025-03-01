@@ -1,6 +1,6 @@
 # Shell
 
-Iimplementation of a shell for Linux in C++.
+Implementation of a shell for Linux in C++.
 
 ## Features
 
