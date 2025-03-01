@@ -103,13 +103,6 @@ std::string Shell::getCwd()
     std::string cwd = std::filesystem::current_path().string();
     debug("cwd: " + cwd);
 
-    // if (!cwd.empty())
-    // {
-    //     cwd = cwd.substr(1, cwd.size() - 1);
-    // }
-
-    // debug("Removing quotes: " + cwd);
-
     return cwd;
 }
 
@@ -153,6 +146,14 @@ void Shell::pwd()
 
 void Shell::cd(std::string newDir)
 {
+    if (newDir[0] == '~')
+    {
+        debug("Going to home path");
+        std::filesystem::current_path("/");
+
+        return;
+    }
+
     if (access(newDir.c_str(), X_OK) != 0)
     {
         std::cout << "cd: " << newDir << ": No such file or directory\n";
