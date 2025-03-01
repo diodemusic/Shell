@@ -148,8 +148,9 @@ void Shell::cd(std::string newDir)
 {
     if (newDir[0] == '~')
     {
-        debug("Going to home path");
-        std::filesystem::current_path("/");
+        std::string homePath = std::getenv("HOME");
+        debug("Going to HOME path: " + homePath);
+        std::filesystem::current_path(homePath);
 
         return;
     }
