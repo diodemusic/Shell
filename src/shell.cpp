@@ -6,6 +6,7 @@
 #include <unistd.h>
 
 #include "debug.h"
+#include "echo.h"
 #include "shell.h"
 
 Shell::Shell() {};
@@ -106,16 +107,6 @@ std::string Shell::getCwd()
     return cwd;
 }
 
-void Shell::echo(std::vector<std::string> args)
-{
-    for (const std::string &arg : args)
-    {
-        std::cout << arg << " ";
-    }
-
-    std::cout << std::endl;
-}
-
 void Shell::type(std::vector<std::string> args)
 {
     if (this->isBuiltin(args[0]))
@@ -175,11 +166,12 @@ void Shell::cd(std::string newDir)
     std::filesystem::current_path(cwd + '/' + newDir);
 }
 
-void Shell::executeBuiltin(std::string command, std::vector<std::string> args)
+void Shell::executeBuiltin(std::string input, std::string command, std::vector<std::string> args)
 {
     if (command == "echo")
     {
-        this->echo(args);
+        Echo echo = Echo{};
+        echo.run(input);
     }
     else if (command == "type")
     {
@@ -232,7 +224,7 @@ void Shell::run()
         if (this->isBuiltin(command))
         {
             debug("Is builtin, running: " + input);
-            this->executeBuiltin(command, args);
+            this->executeBuiltin(input, command, args);
             continue;
         }
 
