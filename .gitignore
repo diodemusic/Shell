@@ -45,7 +45,7 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-build/
+/build/shell.out
 vcpkg_installed
 
 .vscode
